@@ -1,8 +1,9 @@
 "use client";
 
 import { PRODUCT_CATEGORIES } from "@/config";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavItem } from "./NavItem";
+import { useOnClickOutside } from "@/hooks/use-on-click-outslide";
 
 interface INavItemsProps {}
 
@@ -11,8 +12,26 @@ export const NavItems = () => {
 
   const isAnyOpen = activeIndex !== null;
 
+  const navRef = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside(navRef, () => setActiveIndex(null));
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveIndex(null);
+      }
+    };
+
+    document.addEventListener("keydown", handler);
+
+    return () => {
+      document.removeEventListener("keydown", handler);
+    };
+  }, []);
+
   return (
-    <div className="flex h-full gap-4">
+    <div className="flex h-full gap-4" ref={navRef}>
       {PRODUCT_CATEGORIES.map((category, i) => {
         const handleOpen = () => {
           if (activeIndex === i) {
