@@ -5,6 +5,7 @@ import { ComponentProps } from "react";
 import { NavItems } from "./NavItems";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import { Cart } from "./Cart";
 
 interface INavbarProps extends ComponentProps<"div"> {}
 
@@ -71,7 +72,7 @@ export const Navbar = ({ className, ...props }: INavbarProps) => {
                   )}
 
                   <div className="ml-4 flow-root lg:ml-6">
-                    {/* <Cart /> */}
+                    <Cart />
                   </div>
                 </div>
               </div>
