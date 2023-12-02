@@ -3,7 +3,7 @@ import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3001;
+const PORT = Number(process.env.PORT) || 3000;
 
 const start = async () => {
   const payload = await getPayloadClient({
@@ -21,7 +21,7 @@ const start = async () => {
     payload.logger.info(`Next.js started`);
 
     app.listen(PORT, async () => {
-      payload.log.info(
+      payload.logger.info(
         `Next.js App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`,
       );
     });
