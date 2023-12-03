@@ -7,10 +7,23 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { TSignUpInputs, signUpSchema } from "@/lib/validators/sign-up-validator";
 
 export default function SignUpPage() {
-  const {handleSubmit} = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TSignUpInputs>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const handleSignUp = async (data: TSignUpInputs) => {
+    console.log(data)
+  }
 
   return (
     <>
@@ -34,14 +47,15 @@ export default function SignUpPage() {
           </div>
 
           <div className="grid gap-6">
-            <form >
+            <form onSubmit={handleSubmit(handleSignUp)}>
               <div className="grid gap-2">
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
+                    {...register("email")}
                     id="email"
                     className={cn({
-                      "focus-visible:ring-red-500": true,
+                      "focus-visible:ring-red-500": errors.email,
                     })}
                     placeholder="you@example.com"
                   />
@@ -49,16 +63,17 @@ export default function SignUpPage() {
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="password">Password</Label>
                   <Input
+                    {...register("password")}
                     id="password"
                     type="password"
                     className={cn({
-                      "focus-visible:ring-red-500": true,
+                      "focus-visible:ring-red-500": errors.password,
                     })}
                     placeholder="***********"
                   />
                 </div>
 
-                <Button>Sign up</Button>
+                <Button type="submit">Sign up</Button>
               </div>
             </form>
           </div>
