@@ -10,7 +10,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { TSignUpInputs, signUpSchema } from "@/lib/validators/sign-up-validator";
+import {
+  TSignUpInputs,
+  signUpSchema,
+} from "@/lib/validators/sign-up-validator";
+import { trpc } from "@/trpc/client";
 
 export default function SignUpPage() {
   const {
@@ -21,9 +25,14 @@ export default function SignUpPage() {
     resolver: zodResolver(signUpSchema),
   });
 
-  const handleSignUp = async (data: TSignUpInputs) => {
-    console.log(data)
-  }
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
+
+  const handleSignUp = async ({ email, password }: TSignUpInputs) => {
+    mutate({
+      email,
+      password,
+    });
+  };
 
   return (
     <>
