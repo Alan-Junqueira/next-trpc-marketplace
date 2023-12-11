@@ -37,4 +37,5 @@ next-env.d.ts
 
 anotacoes.md
 
+*.env
 .env
