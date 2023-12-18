@@ -1,3 +1,4 @@
+import { VerifyEmail } from "@/components/VerifyEmail";
 import Image from "next/image";
 
 interface IVerifyEmailPageProps {
@@ -15,7 +16,7 @@ export default function VerifyEmailPage({
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[21.875rem]">
         {token && typeof token === "string" ? (
           <div className="grid gap-6 ">
-            {/* <VerifyEmail /> */}
+            <VerifyEmail token={token} />
           </div>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
