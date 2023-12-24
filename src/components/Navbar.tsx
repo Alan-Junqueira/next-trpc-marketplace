@@ -6,11 +6,15 @@ import { NavItems } from "./NavItems";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { Cart } from "./Cart";
+import { getServerSideUser } from "@/lib/payload-utils";
+import { cookies } from "next/headers";
 
 interface INavbarProps extends ComponentProps<"div"> {}
 
-export const Navbar = ({ className, ...props }: INavbarProps) => {
-  const user = null;
+export const Navbar = async ({ className, ...props }: INavbarProps) => {
+  const nextCookies = cookies();
+
+  const { user } = await getServerSideUser(nextCookies);
 
   return (
     <div
