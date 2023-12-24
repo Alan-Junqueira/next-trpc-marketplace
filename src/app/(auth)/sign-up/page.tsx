@@ -15,8 +15,13 @@ import {
   signUpSchema,
 } from "@/lib/validators/sign-up-validator";
 import { trpc } from "@/trpc/client";
+import { toast } from "sonner"
+import { ZodError } from "zod";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -25,7 +30,25 @@ export default function SignUpPage() {
     resolver: zodResolver(signUpSchema),
   });
 
-  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({});
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
+    onError: (err) => {
+      if(err.data?.code === "CONFLICT"){
+        toast.error("This email is already in use. Sign in instead?")
+        return
+      }
+
+      if(err instanceof ZodError){
+        toast.error(err.issues[0].message ?? "Something went wrong")
+        return
+      }
+
+      toast.error("Something went wrong. Please try again.")
+    },
+    onSuccess: ({sentToEmail}) => {
+      toast.success(`Verification email sent to ${sentToEmail}.`)
+      router.push(`/verify-email?to=${sentToEmail}`)
+    }
+  });
 
   const handleSignUp = async ({ email, password }: TSignUpInputs) => {
     mutate({
