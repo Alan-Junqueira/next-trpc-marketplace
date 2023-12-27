@@ -8,6 +8,7 @@ import { buttonVariants } from "./ui/button";
 import { Cart } from "./Cart";
 import { getServerSideUser } from "@/lib/payload-utils";
 import { cookies } from "next/headers";
+import { UserAccountNav } from "./UserAccountNav";
 
 interface INavbarProps extends ComponentProps<"div"> {}
 
@@ -52,7 +53,7 @@ export const Navbar = async ({ className, ...props }: INavbarProps) => {
                   )}
 
                   {user ? (
-                    <></>
+                    <UserAccountNav user={user}/>
                   ) : (
                     <Link
                       href="/sign-up"
