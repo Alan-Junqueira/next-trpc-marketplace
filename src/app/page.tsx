@@ -1,4 +1,5 @@
 import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
+import { ProductReel } from "@/components/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 import Link from "next/link";
@@ -44,24 +45,28 @@ export default function Home() {
             <Button variant="ghost">Our quality promise &rarr;</Button>
           </div>
         </div>
-        {/*// TODO: List products */}
+        <ProductReel title="Brand new" href="/products" />
       </MaxWidthWrapper>
       <section className="border-gry-200 border-t bg-gray-50">
         <MaxWidthWrapper className="py-20">
           <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8 lg:gap-y-0">
-            {PERKS.map(({Icon, description, name}) => (
+            {PERKS.map(({ Icon, description, name }) => (
               <div
                 key={name}
                 className="text-center md:flex md:items-start md:text-left lg:block lg:text-center "
               >
-                <div className="md:flex-shrink-0 flex justify-center">
-                  <div className="h-16 w-16 flex items-center justify-center rounded-full bg-blue-100 text-blue-900">
-                    {<Icon className="w-1/3 h-1/3"/>}
+                <div className="flex justify-center md:flex-shrink-0">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-900">
+                    {<Icon className="h-1/3 w-1/3" />}
                   </div>
                 </div>
                 <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                  <h3 className="text-base font-medium text-gray-900">{name}</h3>
-                  <p className="mt-3 text-sm text-muted-foreground">{description}</p>
+                  <h3 className="text-base font-medium text-gray-900">
+                    {name}
+                  </h3>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {description}
+                  </p>
                 </div>
               </div>
             ))}
