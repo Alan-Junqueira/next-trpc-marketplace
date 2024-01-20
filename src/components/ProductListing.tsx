@@ -6,6 +6,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { cn, formatPrice } from "@/lib/utils";
 import { PRODUCT_CATEGORIES } from "@/config";
+import { ImageSlider } from "./ImageSlider";
 
 interface IProductListingProps extends ComponentProps<typeof Link> {
   product: Product | null;
@@ -36,10 +37,15 @@ export const ProductListing = ({
     ({ value }) => value === product.category,
   )?.label;
 
+  const validUrls = product.images
+    .map(({ image }) => (typeof image === "string" ? image : image.url))
+    .filter(Boolean) as string[]
+
   if (isVisible && product) {
     return (
       <Link
         {...props}
+        href={`/products/${product.id}`}
         className={cn(
           "group/main invisible h-full w-full cursor-pointer",
           {
@@ -49,6 +55,7 @@ export const ProductListing = ({
         )}
       >
         <div className="flex w-full flex-col">
+          <ImageSlider urls={validUrls} />
           <h3 className="mt-4 text-sm font-medium text-gray-700">
             {product.name}
           </h3>
