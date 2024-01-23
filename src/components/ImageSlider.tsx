@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ComponentProps, useEffect, useState } from "react";

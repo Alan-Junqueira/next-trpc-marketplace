@@ -45,7 +45,7 @@ export const ProductListing = ({
     return (
       <Link
         {...props}
-        href={`/products/${product.id}`}
+        href={`/product/${product.id}`}
         className={cn(
           "group/main invisible h-full w-full cursor-pointer",
           {
