@@ -104,7 +104,7 @@ export default async function ProductDetailsPage({
           </div>
 
           {/* Product Images */}
-          <div className="mt-10 lg:col-start-2 lg:row-start-2 lg:mt-0 lg:self-center">
+          <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
             <div className="aspect-square rounded-lg">
               <ImageSlider urls={validUrls} />
             </div>
