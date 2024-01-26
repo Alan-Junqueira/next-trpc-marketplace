@@ -77,7 +77,7 @@ export const ProductReel = ({
                 product={product}
                 index={i}
                 href={`/product/${product?.id}`}
-                key={product?.id || i}
+                key={`product-${i}`}
               />
             ))}
           </div>
