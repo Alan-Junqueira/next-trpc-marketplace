@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { getPayloadClient } from "./get-payload";
 import { nextApp, nextHandler } from "./next-utils";
 import * as trpcExpress from "@trpc/server/adapters/express";
@@ -9,6 +9,8 @@ import { IncomingMessage } from "http";
 import { stripeWebhookHandler } from "./webhooks";
 import nextBuild from "next/dist/build";
 import { join } from "path";
+import { PayloadRequest } from "payload/types";
+import { parse } from "url";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -44,6 +46,22 @@ const start = async () => {
       },
     },
   });
+
+  const cartRouter = express.Router();
+
+  cartRouter.use(payload.authenticate);
+
+  cartRouter.get("/", (req: Request, res: Response) => {
+    const request = req as PayloadRequest;
+
+    if (!request.user) return res.redirect("/sign-in?origin=cart");
+
+    const parseUrl = parse(req.url, true);
+
+    return nextApp.render(req, res, "/cart", parseUrl.query);
+  });
+
+  app.use("/cart", cartRouter);
 
   if (process.env.NEXT_BUILD) {
     app.listen(PORT, async () => {
