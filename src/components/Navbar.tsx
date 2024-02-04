@@ -9,6 +9,7 @@ import { Cart } from "./Cart";
 import { getServerSideUser } from "@/lib/payload-utils";
 import { cookies } from "next/headers";
 import { UserAccountNav } from "./UserAccountNav";
+import { MobileNav } from "./MobileNav";
 
 interface INavbarProps extends ComponentProps<"div"> {}
 
@@ -26,7 +27,7 @@ export const Navbar = async ({ className, ...props }: INavbarProps) => {
         <MaxWidthWrapper>
           <div className="borer-gray-200 border-b">
             <div className="flex h-16 items-center">
-              {/* // TODO: Mobile nav */}
+              <MobileNav />
 
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
@@ -53,7 +54,7 @@ export const Navbar = async ({ className, ...props }: INavbarProps) => {
                   )}
 
                   {user ? (
-                    <UserAccountNav user={user}/>
+                    <UserAccountNav user={user} />
                   ) : (
                     <Link
                       href="/sign-up"
